@@ -1,4 +1,4 @@
-# **Heat Simulator 1.1**
+# **Heat Simulator 1.2**
 
 ## Descripción del problema
 

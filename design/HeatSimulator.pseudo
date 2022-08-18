@@ -1,10 +1,76 @@
 procedure run()
-  // Llama a analyzeArguments, readFile, crea el directorio, 
-  // y crea los hilos que ejecutan concurrentemente el start de Plate.cpp
+  if MPI_Init == MPI_SUCCESS do
+  // Se asignan variables, se simula un struct
+  private clock // clock
+  private plates // vector de plates
+  private processNumber// variable para el numero de proceso
+  private processCounter // variable que para cantidad de procesos
+  MPI_Comm_rank(processNumber)
+  MPI_Comm_size(processCounter)
+  MPI_Bcast(threadNumber, 1, INT ,0, MPI_COMM_WORLD)
+  // proceso cero asigna trabajo
+  if processNumber == 0 do
+    readFile()
+    //---- metodo para repartir trabajos
+    private process := -1
+    private canContinue = 1
+    private cantContinue = 0
+    // este for termina cuando se hayan enviado todos los plates
+    for index:= 0 to plates.size do
+      MPI_Recv(process, 1, INT, ANY_SOURCE, /*tag*/1)
+      MPI_Send(canContinue, 1, INT, process, /*tag*/2)
+      MPI_Send(index, 1, INT, process, 3) // es para que se vayan guardando los resultados en orden
+      MPI_Send(plates[index], TAM, CHAR, process, /*tag*/4)
+    end for
+    // Indica que ya el trabajo termina
+    for process := 1 to processCounter do
+      MPI_Recv(process, 1, INT, ANY_SOURCE, /*tag*/1)
+      MPI_Send(cantContinue, 1, INT, process, /*tag*/2)
+    end for
+
+    //----- fin del metodo para repartir trabajos
+
+    // Recibe los resultados
+    for target := 0 to plates.size() do
+      private index := 0
+      private clock := ""
+      MPI_Recv(index, 1, INT, ANY_SOURCE, 5) // indice para saber donde guardar el reporte en el arreglo
+
+      MPI_Recv(plates[index], 1, INT64_T, ANY_SOURCE, 6) //recibe resultado y lo guarda en la posicion en la que esta el indice
+
+      MPI_Recv(clock, 12, CHAR, ANY_SOURCE, 7)
+    end for
+    createReportFile()
+  else //a partir de aquí se continua con los demas procesos
+    private temporalPlate // es de la clase plate
+    private canContinue = 1
+    private index = 0
+
+    while canContinue == 1 do
+      MPI_Send(processNumber, 1, INT, 0, /*tag*/ 1, MPI_COMM_WORLD)
+
+      MPI_Recv(canContinue, 1, INT, 0, /*tag*/ 2, MPI_COMM_WORLD, MPI_STATUS_IGNORE)
+      if canContinue == 1 do
+        MPI_Recv(index, 1, INT, 0, /*tag*/ 3, MPI_COMM_WORLD, MPI_STATUS_IGNORE)
+        MPI_Recv(temporalPlate, 1, PLATE*, 0, /*tag*/ 4, MPI_COMM_WORLD,
+          MPI_STATUS_IGNORE)
+        // Empieza calculo de la lectura del archivo binario
+        temporalPlate->start()
+        // Termina calculo
+
+        //Ahora se envia resultado
+        MPI_Send(index, 1, INT, 0, /*tag*/ 5, MPI_COMM_WORLD)
+        MPI_Send(temporalPlate, 1, PLATE*, 0, /*tag*/ 6, MPI_COMM_WORLD)
+        MPI_Send(clock, MAX_TAM_CLOCK, CHAR, 0, /*tag*/ 7, MPI_COMM_WORLD)
+      end
+    end
+  end
+  MPI_Finalize()
 end procedure
 
 procedure analyzeArguments(argc, argv)
   // Analiza los argumentos recibidos por el main.cpp
+  shared const threadNumber = integer(argv[2])
 end procedure
 
 procedure readFile()

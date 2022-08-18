@@ -1,4 +1,4 @@
-# **Heat Simulator 1.1**
+# **Heat Simulator 1.2**
 
 ## Descripción del problema
 
@@ -38,10 +38,15 @@ bin/HeatSimulator jobs/job002/job002.txt 8
 
 En este ejemplo, la simulación leerá el job002.txt que se encuentra en la carpeta de jobs y utilizará 8 hilos de ejecución específicamente.
 
+Si corre el programa en su máquina personal usando MPICH, se debe de escribir mpiexec -np _X_, donde _X_ significa la cantidad de procesos que desea correr, seguido de esto escriba los mismos parámetros que con OpenMP más un parámetro extra, que corresponde al subdirectorio donde se encuentran los archivos de trabajo. La entrada que deberá proveer es:
+
+``` text
+mpiexec -n "X" bin/HeatSimulator jobs/job002/job002.txt 8
+```
 
 Para detener la ejecución, utilice la combinación de teclas:
 ``` text
-Ctrl+C
+Ctrl + C
 ```
 
 Una vez finalizado el programa, se recomienda hacer ``` make clean``` para eliminar los archivos que ya no son necesarios y así compilar exitosamente en una futura ejecución.
@@ -103,9 +108,8 @@ Con esta versión se obtuvieron tres distintas duraciones: "7489.22", "7437.54" 
 
 2. Profiling
 
-Al realizar el profiling utilizando la herramienta Callgrind y el job001.txt, se obtuvo que la sección de código que tuvo un mayor consumo de CPU fue ```updateTemperature()```, lo que la hace candidata a ser paralelizada. 
+Al realizar el profiling utilizando la herramienta Callgrind y el job001.txt, se obtuvo que la sección de código que tuvo un mayor consumo de CPU fue "updateTemperature()", lo que la hace candidata a ser paralelizada. 
 ![Captura de Callgrind](img/Callgrind_capture.png)
-
 
 3. Rendimiento del código paralelo
 
@@ -113,11 +117,9 @@ En esta versión, se obtuvieron los tiempos: "3955.23", "3840.89" y "3821.97". A
 
 4. Gráfico
 
-
 ![Gráfico para análisis de rendimiento](img/Grafico_Serial_Omp.png)
 
-
-1. Conclusiones
+5. Conclusiones
 
 Como se puede observar en la **sección 4** de este apartado, la versión paralela del programa tuvo un incremento de velocidad(_speedup_), de "1.95" y una eficiencia de "0.12", además de una duración de "3821.97", la cual supera a los "7437.54" obtenidos con el programa serial. Por lo tanto, queda demostrado que al paralelizar el código, este ha obtenido un aumento del rendimiento considerable.
 
