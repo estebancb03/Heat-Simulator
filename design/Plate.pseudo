@@ -1,0 +1,58 @@
+
+
+procedure start()
+  // Se crea matriz de bordes
+  // Se crea matriz de temperaturas internas
+  while (//No este en punto de equilibrio) 
+    // Actualiza la lamina y aumenta el estado
+  end while
+  // Crea el reporte de la lamina
+end procedure
+
+procedure createTemperaturesMatrix()
+  // Ciclo anidado para introducir las temperaturas de la lamina
+end procedure
+
+procedure createBorderMatrix()
+  // Ciclo anidado para introducir los valores de los bordes de la lamina
+end procedure
+
+procedure updatePlate()
+  // Ciclo anidado para actualizar cada temperatura de la lamina
+end procedure
+
+procedure updateTemperature(row, column)
+  // Actualiza el valor de una sola celda
+end procedure
+
+procedure formatTime()
+  // Le pone formato al tiempo para ser reportado
+end procedure
+
+procedure createReport()
+  // Crea el string que corresponde al reporte de la lamina
+end procedure
+
+procedure getReport()
+  // Retorna el string que corresponde al reporte de la lamina
+end procedure
+
+procedure getName()
+  // Retorna el nombre de la lamina
+end procedure
+
+procedure getState()
+  // Retorna el estado actual de la lamina
+end procedure
+
+procedure getRows()
+  // Retorna el total de filas de la lamina
+end procedure
+
+procedure getColumns()
+  // Retorna el total de columna de la lamina
+end procedure
+
+procedure getTemperaturesMatrix()
+  // Retorna la matriz de temperaturas actual
+end procedure

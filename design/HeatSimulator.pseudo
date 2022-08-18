@@ -1,0 +1,34 @@
+procedure run()
+  // Llama a analyzeArguments, readFile, crea el directorio, 
+  // y crea los hilos que ejecutan concurrentemente el start de Plate.cpp
+end procedure
+
+procedure analyzeArguments(argc, argv)
+  // Analiza los argumentos recibidos por el main.cpp
+end procedure
+
+procedure readFile()
+  // Llama a extractTextData y extractBinaryData
+  // Extrae los datos tanto de texto como binarios y los asigna a las variables
+  // que va a usar cada lamina
+end procedure
+
+procedure extractTextData()
+  // Extrae los datos del archivo de texto
+end procedure
+
+procedure extractJobFolder()
+  // Extrae el nombre de la carpeta job especifica que se usara para la simulacion
+end procedure
+
+procedure extractBinaryData()
+  // Extrae los datos del archivo binario
+end procedure
+
+procedure createReportFile()
+  // Crea el archivo de reporte para mostrarle al usuario
+end procedure
+
+procedure createPlateFile()
+  // Crea el archivo .bin de la lamina con la solucion encontrada
+end procedure
